@@ -1,5 +1,5 @@
 {
-  "name": "project-dz-2",
+  "name": "books-reader-backend",
   "version": "1.0.0",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",

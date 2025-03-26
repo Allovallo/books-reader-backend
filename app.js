@@ -5,7 +5,6 @@ const cors = require("cors");
 const booksRouter = require("./routes/api/books");
 
 const app = express();
-// const port = process.env.PORT || 4000;
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
