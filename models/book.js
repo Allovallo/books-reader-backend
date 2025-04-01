@@ -1,10 +1,10 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const { handleMongooseError } = require("../helpers");
-
 const genreList = ["sci-fi", "romantic"];
-const dateRegexp = /^\d{2}-\d{2}-\d{4}$/; // 16-10-2009
+const dateRegexp = /^\d{2}-\d{2}-\d{4}$/;
+
+const { handleMongooseError } = require("../helpers");
 
 const bookSchema = new Schema(
   {

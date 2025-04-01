@@ -1,9 +1,9 @@
-const Book = require("../models/book");
+const { Book } = require("../models/book");
 
 const { HttpError, ctrlWrapper } = require("../helpers");
 
 const getAll = async (_, res) => {
-  const result = await Book.find({ title: "Worm" });
+  const result = await Book.find();
   res.json(result);
 };
 
