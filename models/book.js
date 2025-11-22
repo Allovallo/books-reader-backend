@@ -35,13 +35,21 @@
 
 // module.exports = { Book, schemas };
 
+const { required } = require("joi");
 const { Schema, model } = require("mongoose");
 
-const bookSchema = new Schema({
-  title: String,
-  author: String,
-});
+const bookSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    author: { type: String, required: true },
+    favorite: { type: Boolean, default: false },
+    genre: { type: String, enum: ["fantasy", "romantic"], required: true },
+    // 16-10-2009
+    date: { type: String, match: /^\d{2}-\d{2}-\d{4}$/, required: true },
+  },
+  { versionKey: false, timestamps: true }
+);
 
 const Book = model("book", bookSchema);
 
-module.exports = {Book};
+module.exports = { Book };

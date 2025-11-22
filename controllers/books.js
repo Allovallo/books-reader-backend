@@ -18,10 +18,10 @@ const getAll = async (_, res) => {
 //   res.json(result);
 // };
 
-// const add = async (req, res) => {
-//   const result = await Book.create(req.body);
-//   res.status(201).json(result);
-// };
+const add = async (req, res) => {
+  const result = await Book.create(req.body);
+  res.status(201).json(result);
+};
 
 // const updateById = async (req, res) => {
 //   const { id } = req.params;
@@ -48,7 +48,7 @@ const getAll = async (_, res) => {
 module.exports = {
   getAll: ctrlWrapper(getAll),
   // getById: ctrlWrapper(getById),
-  // add: ctrlWrapper(add),
+  add: ctrlWrapper(add),
   // updateById: ctrlWrapper(updateById),
   // deleteById: ctrlWrapper(deleteById),
 };
