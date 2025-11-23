@@ -3,20 +3,21 @@ const { Book } = require("../models/book.js");
 const { HttpError, ctrlWrapper } = require("../helpers");
 
 const getAll = async (_, res) => {
-  const result = await Book.find();
+  const result = await Book.find({}, "-createdAt -updatedAt");
   res.json(result);
 };
 
-// const getById = async (req, res) => {
-//   const { id } = req.params;
-//   const result = await books.getById(id);
+const getById = async (req, res) => {
+  const { id } = req.params;
+  // const result = await Book.findOne({ _id: id });
+  const result = await Book.findById(id);
 
-//   if (!result) {
-//     throw HttpError(404, "NOT FOUND");
-//   }
+  if (!result) {
+    throw HttpError(404, "NOT FOUND");
+  }
 
-//   res.json(result);
-// };
+  res.json(result);
+};
 
 const add = async (req, res) => {
   const result = await Book.create(req.body);
@@ -47,7 +48,7 @@ const add = async (req, res) => {
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  // getById: ctrlWrapper(getById),
+  getById: ctrlWrapper(getById),
   add: ctrlWrapper(add),
   // updateById: ctrlWrapper(updateById),
   // deleteById: ctrlWrapper(deleteById),
