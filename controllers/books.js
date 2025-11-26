@@ -48,7 +48,7 @@ const updateFavorite = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const { id } = req.params;
-  const result = await Book.findByIdAndUpdate(id);
+  const result = await Book.findByIdAndDelete(id);
 
   if (!result) {
     throw HttpError(404, "Not found!!!");
