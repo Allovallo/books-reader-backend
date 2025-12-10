@@ -23,11 +23,11 @@ bookSchema.post("save", handleMongooseError);
 const addSchema = Joi.object({
   title: Joi.string().required(),
   author: Joi.string().required(),
-  favorite: Joi.boolean(),
   genre: Joi.string()
     .valid(...genreList)
     .required(),
   date: Joi.string().pattern(dateRegexp).required(),
+  favorite: Joi.boolean(),
 });
 
 const updateFavoriteSchema = Joi.object({
