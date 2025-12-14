@@ -10,7 +10,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
@@ -23,8 +23,12 @@ const userSchema = new Schema(
       minlength: 6,
       required: true,
     },
+    token: {
+      type: String,
+      default: "",
+    },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: true },
 );
 
 userSchema.post("save", handleMongooseError);

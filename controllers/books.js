@@ -2,11 +2,18 @@ const { Book } = require('../models/book.js');
 
 const { HttpError, ctrlWrapper } = require('../helpers');
 
-const getAll = async (_, res) => {
+const getAll = async (req, res) => {
+  const { _id: owner } = req.user;
+
+  console.log(req.query);
+  const { page = 1, limit = 1 } = req.query;
+  const skip = (page - 1) * limit;
+
   const result = await Book.find(
-    {},
+    { owner },
     '-createdAt -updatedAt',
-  );
+    { skip, limit},
+  ).populate('owner', 'name email');
   res.json(result);
 };
 
