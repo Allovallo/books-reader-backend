@@ -1,9 +1,12 @@
-const { Book } = require("../models/book.js");
+const { Book } = require('../models/book.js');
 
-const { HttpError, ctrlWrapper } = require("../helpers");
+const { HttpError, ctrlWrapper } = require('../helpers');
 
 const getAll = async (_, res) => {
-  const result = await Book.find({}, "-createdAt -updatedAt");
+  const result = await Book.find(
+    {},
+    '-createdAt -updatedAt',
+  );
   res.json(result);
 };
 
@@ -13,14 +16,17 @@ const getById = async (req, res) => {
   const result = await Book.findById(id);
 
   if (!result) {
-    throw HttpError(404, "NOT FOUND");
+    throw HttpError(404, 'NOT FOUND');
   }
 
   res.json(result);
 };
 
 const add = async (req, res) => {
-  const result = await Book.create(req.body);
+  // console.log(req.user)
+  const { _id: owner } = req.user;
+
+  const result = await Book.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
@@ -29,10 +35,11 @@ const updateById = async (req, res) => {
   const result = await Book.findByIdAndUpdate(
     id,
     req.body,
-    { new: true });
+    { new: true },
+  );
 
   if (!result) {
-    throw HttpError(404, "Not found!!!");
+    throw HttpError(404, 'Not found!!!');
   }
 
   res.json(result);
@@ -43,11 +50,11 @@ const updateFavorite = async (req, res) => {
   const result = await Book.findByIdAndUpdate(
     id,
     req.body,
-    { new: true }
+    { new: true },
   );
 
   if (!result) {
-    throw HttpError(404, "Not found!!!");
+    throw HttpError(404, 'Not found!!!');
   }
 
   res.json(result);
@@ -58,10 +65,10 @@ const deleteById = async (req, res) => {
   const result = await Book.findByIdAndDelete(id);
 
   if (!result) {
-    throw HttpError(404, "Not found!!!");
+    throw HttpError(404, 'Not found!!!');
   }
 
-  res.json({ message: "Delete success!" });
+  res.json({ message: 'Delete success!' });
 };
 
 module.exports = {

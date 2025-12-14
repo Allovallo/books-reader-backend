@@ -1,24 +1,37 @@
-const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+const { Schema, model } = require('mongoose');
+const Joi = require('joi');
 
-const genreList = ["fantasy", "romantic"];
+const genreList = ['fantasy', 'romantic'];
 const dateRegexp = /^\d{2}-\d{2}-\d{4}$/;
 
-const { handleMongooseError } = require("../helpers");
+const { handleMongooseError } = require('../helpers');
 
 const bookSchema = new Schema(
   {
     title: { type: String, required: true },
     author: { type: String, required: true },
     favorite: { type: Boolean, default: false },
-    genre: { type: String, enum: genreList, required: true },
+    genre: {
+      type: String,
+      enum: genreList,
+      required: true,
+    },
     // 16-10-2009
-    date: { type: String, match: dateRegexp, required: true },
+    date: {
+      type: String,
+      match: dateRegexp,
+      required: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: true },
 );
 
-bookSchema.post("save", handleMongooseError);
+bookSchema.post('save', handleMongooseError);
 
 const addSchema = Joi.object({
   title: Joi.string().required(),
@@ -36,6 +49,6 @@ const updateFavoriteSchema = Joi.object({
 
 const schemas = { addSchema, updateFavoriteSchema };
 
-const Book = model("book", bookSchema);
+const Book = model('book', bookSchema);
 
 module.exports = { Book, schemas };
