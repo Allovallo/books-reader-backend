@@ -40,7 +40,7 @@ const addSchema = Joi.object({
     .valid(...genreList)
     .required(),
   date: Joi.string().pattern(dateRegexp).required(),
-  favorite: Joi.boolean(),
+
 });
 
 const updateFavoriteSchema = Joi.object({
