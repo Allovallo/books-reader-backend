@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const gravatar = require('gravatar');
 
 const { User } = require('../models/user');
 
@@ -17,10 +18,12 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
+  const avatarURL = gravatar.url(email);
 
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
+    avatarURL,
   });
 
   res.status(201).json({
@@ -68,7 +71,7 @@ const logout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: '' });
 
-  res.json({message: "Logout success!"})
+  res.json({ message: 'Logout success!' });
 };
 
 module.exports = {
