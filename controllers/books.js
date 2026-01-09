@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
   const result = await Book.find(
     { owner },
     '-createdAt -updatedAt',
-    { skip: 2, limit: 2},
+    { skip, limit },
   ).populate('owner', 'name email');
   res.json(result);
 };
